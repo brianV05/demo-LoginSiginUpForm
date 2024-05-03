@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, HTMLInputTypeAttribute, useState } from "react";
 import facebook_icon from '../Components/Assets/fb.png';
 import x_icon from '../Components/Assets/X.png';
 import google_icon from '../Components/Assets/google.png';
 
 
 export const LoginForm = () =>{
+    // form title state
     const [action, setAction] = useState("Welcome back");
 
+    // form state
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPassword, setUserPassword] = useState("");
+
+
+    //user input
+    const UserOnChangeFunction = (synthEvent: ChangeEvent<HTMLInputElement>) => {
+        if(synthEvent.target.name === "userName" ){
+            setUserName(synthEvent.target.value);
+        }
+        else if(synthEvent.target.name === "userEmail"){
+            setUserEmail(synthEvent.target.value);
+        }
+        else if(synthEvent.target.name === "userPassword"){
+            setUserPassword(synthEvent.target.value);
+        }
+    }
 
 
     return (
@@ -15,26 +34,26 @@ export const LoginForm = () =>{
                 <div className = "text"> {action}</div>
             </div>
             
-            <div className = "inputs">
+            <form className = "inputs">
 
                 {action==="Welcome Back!"? <div></div> : <div className = "input">
-                    <input placeholder="Name" type="text" />
+                    <input placeholder="Name" type="text" value ={userName} onChange={UserOnChangeFunction} name="userName"/>
                 </div>}
                 
                     
                 <div className = "input">
-                    <input placeholder="Email" type="email" />
+                    <input placeholder="Email" type="email" value={userEmail} onChange={UserOnChangeFunction} name="userEmail"/>
                 </div>
 
                 <div className = "input">
-                    <input placeholder="Password" type="password" />
+                    <input placeholder="Password" type="password" value={userPassword} onChange={UserOnChangeFunction} name="userPassword"/>
                 </div>
                 
-            </div>
+            </form>
 
             <div className="submit-container">
               {/*  <div className="submit">Sign Up</div>*/}
-              <button className={action==="Sign Up"? "submit gray" : "submit"} onClick={() =>{setAction("Nice To Meet You!")}}> Sign Up</button>
+              <button className={action} onClick={() =>{setAction("Nice To Meet You!")}}> Sign Up</button>
 
                 {action==="Nice To Meet You!"? <div></div> : <div className="forgot-password">Forgot Password?</div>}
                 
@@ -50,7 +69,7 @@ export const LoginForm = () =>{
 
 
             <div> Don't have an account yet?</div>
-            <button className={action==="Login"? "submit gray" : "submit"} onClick={() =>{setAction("Welcome Back!")}}>Login</button>
+            <button className={action} onClick={() =>{setAction("Welcome Back!")}}>Login</button>
             
 
 
